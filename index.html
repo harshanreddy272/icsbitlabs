@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OT Sentinel | Cybersecurity Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">O</div>
+            <div>
+                <h2>OT SENTINEL</h2>
+                <span>Security Command Center</span>
+            </div>
+        </div>
+
+        <nav>
+            <button class="nav-btn active" data-page="dashboard">
+                <span>▦</span> Dashboard
+            </button>
+
+            <button class="nav-btn" data-page="attack">
+                <span>⌁</span> Attack Paths
+            </button>
+
+            <button class="nav-btn" data-page="assets">
+                <span>◈</span> Assets
+            </button>
+
+            <button class="nav-btn" data-page="findings">
+                <span>!</span> Findings
+                <b class="badge">4</b>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="sensor-status">
+                <span class="green-dot"></span>
+
+                <div>
+                    <strong>Collection healthy</strong>
+                    <small>Last sync 42 sec ago</small>
+                </div>
+            </div>
+
+          
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <div>
+                <div class="eyebrow">SECURITY OPERATIONS</div>
+                <h1 id="pageTitle">Environment Overview</h1>
+            </div>
+
+            <div class="top-actions">
+
+                <div class="search">
+                    🔍
+                    <input
+                        type="text"
+                        id="globalSearch"
+                        placeholder="Search assets, findings..."
+                    >
+                    <kbd>/</kbd>
+                </div>
+
+                <button class="notification">♢<span></span></button>
+
+                <div class="avatar">SH</div>
+
+            </div>
+
+        </header>
+
+
+        <!-- FILTER BAR -->
+        <section class="filters">
+
+            <div class="filter">
+                <label>Site</label>
+
+                <select id="siteFilter">
+                    <option value="all">All sites</option>
+                    <option value="Plant Alpha">Plant Alpha</option>
+                    <option value="Plant Beta">Plant Beta</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Zone</label>
+
+                <select id="zoneFilter">
+                    <option value="all">All zones</option>
+                    <option value="Operations">Operations</option>
+                    <option value="Line A">Line A</option>
+                    <option value="Line B">Line B</option>
+                    <option value="DMZ">DMZ</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Severity</label>
+
+                <select id="severityFilter">
+                    <option value="all">All severity</option>
+                    <option value="Critical">Critical</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Time</label>
+
+                <select>
+                    <option>Last 24 hours</option>
+                    <option>Last 7 days</option>
+                    <option>Last 30 days</option>
+                </select>
+            </div>
+
+            <button id="clearFilters" class="clear-btn">
+                Clear filters
+            </button>
+
+            <div class="filter-space"></div>
+
+            <div class="data-current">
+                <span></span>
+                Data current · 42s
+            </div>
+
+        </section>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section id="dashboard" class="page active">
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Security posture</h2>
+                    <p>What needs attention across monitored OT environments.</p>
+                </div>
+
+                <div class="updated">
+                    Updated <b>09:42 UTC</b> · Today
+                </div>
+
+            </div>
+
+
+            <!-- KPI CARDS -->
+
+            <div class="kpi-grid">
+
+                <div class="kpi posture">
+
+                    <div class="kpi-title">
+                        Overall posture
+                        <span class="warning-pill">Needs attention</span>
+                    </div>
+
+                    <div class="posture-score">
+                        72<span>/100</span>
+                    </div>
+
+                    <div class="progress">
+                        <span style="width:72%"></span>
+                    </div>
+
+                    <div class="kpi-bottom">
+                        <b>↑ 6 points</b>
+                        <small>vs previous period</small>
+                    </div>
+
+                </div>
+
+
+                <div class="kpi clickable" data-page-open="assets">
+
+                    <div class="kpi-title">
+                        Monitored assets
+                        <span class="green">+4</span>
+                    </div>
+
+                    <div class="number">1,284</div>
+
+                    <div class="kpi-bottom">
+                        <b class="green">1,201 online</b>
+                        <small>83 inactive</small>
+                    </div>
+
+                </div>
+
+
+                <div class="kpi clickable" data-page-open="findings">
+
+                    <div class="kpi-title">
+                        High-priority findings
+                        <span class="critical-icon">!</span>
+                    </div>
+
+                    <div class="number">17</div>
+
+                    <div class="kpi-bottom">
+                        <b class="red">4 critical</b>
+                        <small>8 high · 5 medium</small>
+                    </div>
+
+                </div>
+
+
+                <div class="kpi clickable">
+
+                    <div class="kpi-title">
+                        Exposed critical assets
+                        <span class="high-icon">↗</span>
+                    </div>
+
+                    <div class="number">6</div>
+
+                    <div class="kpi-bottom">
+                        <b class="orange">3 new</b>
+                        <small>last 24 hours</small>
+                    </div>
+
+                </div>
+
+
+                <div class="kpi clickable" data-page-open="attack">
+
+                    <div class="kpi-title">
+                        Attack paths
+                        <span class="critical-icon">⌁</span>
+                    </div>
+
+                    <div class="number">23</div>
+
+                    <div class="kpi-bottom">
+                        <b class="red">5 high risk</b>
+                        <small>to critical assets</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MAIN DASHBOARD GRID -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- RISK -->
+
+                <article class="panel risk-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h3>Risk & Findings</h3>
+                            <p>Unresolved findings by severity</p>
+                        </div>
+
+                        <button class="link-btn" data-page-open="findings">
+                            View findings →
+                        </button>
+
+                    </div>
+
+
+                    <div class="risk-content">
+
+                        <div class="donut">
+
+                            <div>
+                                <strong>17</strong>
+                                <span>open</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="legend">
+
+                            <div>
+                                <i class="dot critical"></i>
+                                Critical
+                                <b>4</b>
+                            </div>
+
+                            <div>
+                                <i class="dot high"></i>
+                                High
+                                <b>8</b>
+                            </div>
+
+                            <div>
+                                <i class="dot medium"></i>
+                                Medium
+                                <b>5</b>
+                            </div>
+
+                            <div>
+                                <i class="dot low"></i>
+                                Low
+                                <b>0</b>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart">
+
+                        <div class="chart-header">
+                            <span>Risk trend · 7 days</span>
+                            <b>↑ 8.4%</b>
+                        </div>
+
+                        <svg viewBox="0 0 600 150">
+
+                            <line x1="0" y1="110" x2="600" y2="110"/>
+                            <line x1="0" y1="75" x2="600" y2="75"/>
+                            <line x1="0" y1="40" x2="600" y2="40"/>
+
+                            <polyline
+                                points="0,105 85,94 170,98 255,75 340,82 425,57 510,64 600,32"
+                            />
+
+                        </svg>
+
+                        <div class="days">
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                            <span>Sun</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ATTACK PATH PREVIEW -->
+
+                <article class="panel attack-preview">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h3>Attack-path preview</h3>
+                            <p>Highest-risk route to critical assets</p>
+                        </div>
+
+                        <button class="link-btn" data-page-open="attack">
+                            Open map →
+                        </button>
+
+                    </div>
+
+
+                    <div class="mini-path">
+
+                        <div class="mini-node source">
+                            <span>SOURCE</span>
+                            <strong>ENG-03</strong>
+                            <small>Engineering WS</small>
+                        </div>
+
+                        <div class="arrow">
+                            <span>RDP · 3389</span>
+                            →
+                        </div>
+
+                        <div class="mini-node pivot">
+                            <span>PIVOT</span>
+                            <strong>HMI-12</strong>
+                            <small>Line A</small>
+                        </div>
+
+                        <div class="arrow orange">
+                            <span>S7 · 102</span>
+                            →
+                        </div>
+
+                        <div class="mini-node target">
+                            <span>TARGET</span>
+                            <strong>PLC-07</strong>
+                            <small>Critical PLC</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="path-info">
+                        <span>● High-risk path</span>
+                        <strong>94 risk</strong>
+                        <small>98% confidence</small>
+                    </div>
+
+                    <p class="path-description">
+                        Cross-zone movement can reach a crown-jewel control asset.
+                    </p>
+
+                </article>
+
+
+                <!-- ASSET VISIBILITY -->
+
+                <article class="panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h3>Asset visibility</h3>
+                            <p>Inventory health and exposure</p>
+                        </div>
+
+                        <button class="link-btn" data-page-open="assets">
+                            View inventory →
+                        </button>
+
+                    </div>
+
+
+                    <div class="asset-bars">
+
+                        <div>
+                            <span>Identified</span>
+                            <div><i style="width:92%"></i></div>
+                            <b>1,184</b>
+                        </div>
+
+                        <div>
+                            <span>Incomplete</span>
+                            <div><i style="width:34%"></i></div>
+                            <b>61</b>
+                        </div>
+
+                        <div>
+                            <span>Offline</span>
+                            <div><i style="width:21%"></i></div>
+                            <b>39</b>
+                        </div>
+
+                    </div>
+
+
+                    <div class="asset-types">
+
+                        <span>PLC <b>342</b></span>
+                        <span>HMI <b>216</b></span>
+                        <span>RTU <b>178</b></span>
+                        <span>Server <b>154</b></span>
+                        <span>Network <b>121</b></span>
+                        <span>Other <b>273</b></span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- TOPOLOGY -->
+
+                <article class="panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h3>Network / topology insight</h3>
+                            <p>Where connectivity is concentrated</p>
+                        </div>
+
+                        <span class="small-tag">Plant Alpha</span>
+
+                    </div>
+
+
+                    <div class="topology">
+
+                        <div class="topology-zone operations">
+                            OPERATIONS
+                            <strong>486 assets</strong>
+                        </div>
+
+                        <div class="topology-zone linea">
+                            LINE A
+                            <strong>312 assets</strong>
+                        </div>
+
+                        <div class="topo-circle c1">PLC</div>
+                        <div class="topo-circle c2">HMI</div>
+                        <div class="topo-circle c3">PLC</div>
+
+                        <div class="hotspot">
+                            Communication hotspot
+                            <b>Line A</b>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- TIMELINE -->
+
+                <article class="panel timeline-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h3>Recent changes</h3>
+                            <p>Latest events requiring awareness</p>
+                        </div>
+
+                        <button class="link-btn" id="allEvents">
+                            View all
+                        </button>
+
+                    </div>
+
+
+                    <div id="timeline"></div>
+
+                </article>
+
+
+                <!-- SENSOR HEALTH -->
+
+                <article class="panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h3>Platform & Sensor Health</h3>
+                            <p>Can you trust current visibility?</p>
+                        </div>
+
+                        <span class="healthy-pill">Healthy</span>
+
+                    </div>
+
+
+                    <div class="health-row">
+                        <span>Data freshness</span>
+                        <b>42 sec</b>
+                        <em>Good</em>
+                    </div>
+
+                    <div class="health-row">
+                        <span>Sensor coverage</span>
+                        <b>96.8%</b>
+                        <em>Good</em>
+                    </div>
+
+                    <div class="health-row degraded">
+                        <span>GW-02 collection</span>
+                        <b>Degraded</b>
+                        <em>Partial data</em>
+                    </div>
+
+
+                    <div class="visibility-warning">
+
+                        <span>△</span>
+
+                        <div>
+                            <strong>Visibility caveat</strong>
+                            <small>
+                                Some relationship evidence from GW-02 is incomplete.
+                            </small>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ATTACK PATH PAGE ================= -->
+
+        <section id="attack" class="page">
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Attack Path Investigation</h2>
+                    <p>
+                        Trace movement opportunities from exposure to high-value targets.
+                    </p>
+                </div>
+
+                <div class="map-actions">
+                    <button class="secondary-btn" id="fitView">
+                        Fit to view
+                    </button>
+
+                    <button class="primary-btn" id="blastRadius">
+                        Show blast radius
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div class="attack-layout">
+
+                <div class="graph-panel">
+
+                    <div class="graph-toolbar">
+
+                        <div class="segments">
+                            <button class="segment active">Single path</button>
+                            <button class="segment">Multi-path</button>
+                        </div>
+
+                        <input
+                            id="graphSearch"
+                            class="graph-search"
+                            placeholder="⌕ Find asset..."
+                        >
+
+                        <button class="zoom-btn" id="zoomOut">−</button>
+                        <button class="zoom-btn" id="zoomIn">+</button>
+                        <button class="zoom-btn" id="resetZoom">⟳</button>
+
+                    </div>
+
+
+                    <div id="graph" class="graph">
+
+                        <div class="zone-label zone-operation">
+                            OPERATIONS ZONE
+                        </div>
+
+                        <div class="zone-label zone-control">
+                            LINE A / CONTROL ZONE
+                        </div>
+
+
+                        <svg id="connections">
+
+                            <defs>
+                                <marker
+                                    id="arrow"
+                                    markerWidth="8"
+                                    markerHeight="8"
+                                    refX="7"
+                                    refY="3"
+                                    orient="auto"
+                                >
+                                    <path d="M0,0 L0,6 L7,3 z"/>
+                                </marker>
+                            </defs>
+
+                            <line
+                                class="edge risky"
+                                x1="17%"
+                                y1="50%"
+                                x2="36%"
+                                y2="70%"
+                            />
+
+                            <line
+                                class="edge risky"
+                                x1="36%"
+                                y1="70%"
+                                x2="62%"
+                                y2="50%"
+                            />
+
+                            <line
+                                class="edge normal"
+                                x1="17%"
+                                y1="50%"
+                                x2="36%"
+                                y2="30%"
+                            />
+
+                            <line
+                                class="edge risky"
+                                x1="36%"
+                                y1="30%"
+                                x2="62%"
+                                y2="50%"
+                            />
+
+                            <line
+                                class="edge normal"
+                                x1="62%"
+                                y1="50%"
+                                x2="84%"
+                                y2="50%"
+                            />
+
+                        </svg>
+
+
+                        <!-- SOURCE -->
+
+                        <div
+                            class="graph-node source-node"
+                            data-asset="ENG-03"
+                        >
+
+                            <span class="node-role">SOURCE</span>
+
+                            <strong>ENG-03</strong>
+
+                            <small>Engineering WS</small>
+
+                            <div>
+                                <span>High</span>
+                                <b>Risk 76</b>
+                            </div>
+
+                        </div>
+
+
+                        <!-- PIVOT 1 -->
+
+                        <div
+                            class="graph-node pivot-node pivot-one"
+                            data-asset="GW-02"
+                        >
+
+                            <span class="node-role">PIVOT</span>
+
+                            <strong>GW-02</strong>
+
+                            <small>Gateway · DMZ</small>
+
+                            <div>
+                                <span>Medium</span>
+                                <b>Risk 61</b>
+                            </div>
+
+                        </div>
+
+
+                        <!-- PIVOT 2 -->
+
+                        <div
+                            class="graph-node pivot-node pivot-two"
+                            data-asset="HMI-12"
+                        >
+
+                            <span class="node-role">PIVOT</span>
+
+                            <strong>HMI-12</strong>
+
+                            <small>HMI · Line A</small>
+
+                            <div>
+                                <span>High</span>
+                                <b>Risk 82</b>
+                            </div>
+
+                        </div>
+
+
+                        <!-- TARGET -->
+
+                        <div
+                            class="graph-node target-node"
+                            data-asset="PLC-07"
+                        >
+
+                            <span class="node-role">TARGET</span>
+
+                            <strong>PLC-07</strong>
+
+                            <small>Critical PLC · Line A</small>
+
+                            <div>
+                                <span>Critical</span>
+                                <b>Risk 94</b>
+                            </div>
+
+                        </div>
+
+
+                        <!-- TARGET 2 -->
+
+                        <div
+                            class="graph-node target-node target-two"
+                            data-asset="HIST-01"
+                        >
+
+                            <span class="node-role">TARGET</span>
+
+                            <strong>HIST-01</strong>
+
+                            <small>Historian</small>
+
+                            <div>
+                                <span>Critical</span>
+                                <b>Risk 88</b>
+                            </div>
+
+                        </div>
+
+
+                        <div class="graph-legend">
+
+                            <span><i class="source-key"></i> Source</span>
+                            <span><i class="pivot-key"></i> Pivot</span>
+                            <span><i class="target-key"></i> Target</span>
+                            <span><i class="edge-key"></i> Risky relationship</span>
+
+                        </div>
+
+
+                        <div id="blastLabel" class="blast-label hidden">
+                            Reachable assets: 7 · 2 critical
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INVESTIGATION PANEL -->
+
+                <aside id="investigation" class="investigation">
+
+                    <button id="closePanel" class="close-panel">
+                        ×
+                    </button>
+
+                    <div id="investigationContent">
+
+                        <div class="empty-investigation">
+
+                            <div class="large-icon">⌁</div>
+
+                            <h3>Select a node</h3>
+
+                            <p>
+                                Select a source, pivot or target to investigate
+                                its security context.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ASSETS PAGE ================= -->
+
+        <section id="assets" class="page">
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Asset Inventory</h2>
+                    <p>Operational assets and their current security context.</p>
+                </div>
+
+                <span class="healthy-pill">
+                    1,284 monitored
+                </span>
+
+            </div>
+
+
+            <div class="table-panel">
+
+                <div class="table-header">
+                    <strong id="assetCount">6 highlighted assets</strong>
+                    <span>Click an asset to inspect its context.</span>
+                </div>
+
+
+                <div class="table-scroll">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+                            <th>Asset</th>
+                            <th>Type</th>
+                            <th>Site / Zone</th>
+                            <th>Criticality</th>
+                            <th>Risk</th>
+                            <th>State</th>
+                            <th>Issues</th>
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="assetTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FINDINGS PAGE ================= -->
+
+        <section id="findings" class="page">
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Security Findings</h2>
+                    <p>Prioritized issues requiring review or investigation.</p>
+                </div>
+
+                <button class="primary-btn" id="ackAll">
+                    Acknowledge visible
+                </button>
+
+            </div>
+
+
+            <div id="findingCards" class="finding-grid"></div>
+
+        </section>
+
+
+        <!-- EMPTY -->
+
+        <section id="empty" class="page">
+
+            <div class="empty-page">
+
+                <div>⌕</div>
+
+                <h2>No matching results</h2>
+
+                <p>
+                    No asset or finding matches the current filters.
+                </p>
+
+                <button class="primary-btn" id="emptyClear">
+                    Clear filters
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
